@@ -66,8 +66,82 @@ def density_water_pT(p, T):
 
     return PropsSI("Dmass", "P", p, "T", T, "Water")
 
+
+def dynamic_viscosity_water_pT(p, T):
+    """
+    Calculate dynamic viscosity of water from pressure and temperature.
+
+    Parameters
+    ----------
+    p : float
+        Pressure [Pa]
+    T : float
+        Temperature [K]
+
+    Returns
+    -------
+    mu : float
+        Dynamic viscosity of water [Pa·s]
+
+    Notes
+    -----
+    Internally uses CoolProp property database.
+    """
+
+    return PropsSI("V", "P", p, "T", T, "Water")
+
+
+def kinematic_viscosity_water_pT(p, T):
+    """
+    Calculate kinematic viscosity of water from pressure and temperature.
+
+    Parameters
+    ----------
+    p : float
+        Pressure [Pa]
+    T : float
+        Temperature [K]
+
+    Returns
+    -------
+    nu : float
+        Kinematic viscosity of water [m²/s]
+
+    Notes
+    -----
+    Calculated as dynamic viscosity divided by density.
+    """
+
+    mu = dynamic_viscosity_water_pT(p, T)
+    rho = density_water_pT(p, T)
+
+    return mu / rho
+
+
+def specific_heat_capacity_water_pT(p, T):
+    """
+    Calculate specific heat capacity of water from pressure and temperature.
+
+    Parameters
+    ----------
+    p : float
+        Pressure [Pa]
+    T : float
+        Temperature [K]
+
+    Returns
+    -------
+    cp : float
+        Specific heat capacity of water [J/(kg·K)]
+
+    Notes
+    -----
+    Internally uses CoolProp property database.
+    """
+
+    return PropsSI("C", "P", p, "T", T, "Water")
+
 # TODO:
-# - viscosity_water_pT
 # - cp_water_pT
 # - density_air_pT
 # - viscosity_air_pT

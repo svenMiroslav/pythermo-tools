@@ -24,6 +24,9 @@ import pytest
 from pythermo_tools.properties import (
     enthalpy_water_pT,
     density_water_pT,
+    dynamic_viscosity_water_pT,
+    kinematic_viscosity_water_pT,
+    specific_heat_capacity_water_pT,
 )
 
 
@@ -120,4 +123,154 @@ def test_density_water_pT_elevated_conditions():
         expected_rho,
         abs=1.5,
         rel=0.0015
+    )
+
+
+def test_dynamic_viscosity_water_pT_standard_conditions():
+    """
+    Test dynamic viscosity of water at standard conditions.
+
+    Conditions:
+        p = 1 bar
+        T = 293.15 K (20 °C)
+    """
+
+    p_bar = 1.0
+    p = p_bar * 1e5  # Pa
+    T = 293.15       # K
+
+    mu = dynamic_viscosity_water_pT(p, T)
+
+    expected_mu = 1001.61e-6  # Pa·s, reference value from FSB Heat Tables
+
+    assert mu == pytest.approx(
+        expected_mu,
+        rel=0.02,
+        abs=2e-5
+    )
+
+
+def test_dynamic_viscosity_water_pT_elevated_temperature():
+    """
+    Test dynamic viscosity of water at elevated temperature.
+
+    Conditions:
+        p = 5 bar
+        T = 353.15 K (80 °C)
+    """
+
+    p_bar = 5.0
+    p = p_bar * 1e5  # Pa
+    T = 353.15       # K
+
+    mu = dynamic_viscosity_water_pT(p, T)
+
+    expected_mu = 354.46e-6  # Pa·s, reference value from FSB Heat Tables
+
+    assert mu == pytest.approx(
+        expected_mu,
+        rel=0.03,
+        abs=1e-5
+    )
+
+
+def test_kinematic_viscosity_water_pT_standard_conditions():
+    """
+    Test kinematic viscosity of water at standard conditions.
+
+    Conditions:
+        p = 1 bar
+        T = 293.15 K (20 °C)
+    """
+
+    p_bar = 1.0
+    p = p_bar * 1e5  # Pa
+    T = 293.15       # K
+
+    nu = kinematic_viscosity_water_pT(p, T)
+
+    mu_tab = 1001.61e-6  # Pa·s, reference value from FSB Heat Tables
+    rho_tab = 998.21     # kg/m³, reference value from FSB Heat Tables
+
+    expected_nu = mu_tab / rho_tab  # m²/s
+
+    assert nu == pytest.approx(
+        expected_nu,
+        rel=0.03,
+        abs=3e-8
+    )
+
+
+def test_kinematic_viscosity_water_pT_elevated_temperature():
+    """
+    Test kinematic viscosity of water at elevated temperature.
+
+    Conditions:
+        p = 5 bar
+        T = 353.15 K (80 °C)
+    """
+
+    p_bar = 5.0
+    p = p_bar * 1e5  # Pa
+    T = 353.15       # K
+
+    nu = kinematic_viscosity_water_pT(p, T)
+
+    mu_tab = 354.46e-6   # Pa·s, reference value from FSB Heat Tables
+    rho_tab = 972.01     # kg/m³, reference value from FSB Heat Tables
+
+    expected_nu = mu_tab / rho_tab  # m²/s
+
+    assert nu == pytest.approx(
+        expected_nu,
+        rel=0.04,
+        abs=5e-8
+    )
+
+
+def test_specific_heat_capacity_water_pT_standard_conditions():
+    """
+    Test specific heat capacity of water at standard conditions.
+
+    Conditions:
+        p = 1 bar
+        T = 293.15 K (20 °C)
+    """
+
+    p_bar = 1.0
+    p = p_bar * 1e5  # Pa
+    T = 293.15       # K
+
+    cp = specific_heat_capacity_water_pT(p, T)
+
+    expected_cp = 4184.8  # J/(kg·K), reference value from FSB Heat Tables
+
+    assert cp == pytest.approx(
+        expected_cp,
+        rel=0.01,
+        abs=50.0
+    )
+
+
+def test_specific_heat_capacity_water_pT_elevated_temperature():
+    """
+    Test specific heat capacity of water at elevated temperature.
+
+    Conditions:
+        p = 5 bar
+        T = 353.15 K (80 °C)
+    """
+
+    p_bar = 5.0
+    p = p_bar * 1e5  # Pa
+    T = 353.15       # K
+
+    cp = specific_heat_capacity_water_pT(p, T)
+
+    expected_cp = 4194.6  # J/(kg·K), reference value from FSB Heat Tables
+
+    assert cp == pytest.approx(
+        expected_cp,
+        rel=0.01,
+        abs=50.0
     )
