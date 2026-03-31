@@ -64,7 +64,7 @@ def test_nusselt_vertical_plate_laminar_typical_case():
 def test_nusselt_vertical_plate_turbulent_basic_case():
     """
     Test turbulent natural convection Nusselt number
-    for a vertical plate.
+    for a vertical plate or vertical pipe.
 
     Conditions:
         Ra = 1e10
@@ -89,7 +89,7 @@ def test_nusselt_vertical_plate_turbulent_basic_case():
 def test_nusselt_vertical_plate_turbulent_typical_case():
     """
     Test turbulent natural convection Nusselt number
-    for a vertical plate.
+    for a vertical plate or vertical pipe.
 
     Conditions:
         Ra = 1e9
