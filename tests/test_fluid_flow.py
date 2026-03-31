@@ -10,7 +10,8 @@ from pythermo_tools.fluid_flow import (
     reynolds_number,
     reynolds_number_rho_mu,
     grashof_number,
-    grashof_number_ideal_gas
+    grashof_number_ideal_gas,
+    rayleigh_number,
 )
 
 
@@ -251,6 +252,58 @@ def test_grashof_number_basic_case():
 
     assert Gr == pytest.approx(
         expected_Gr,
+        rel=1e-9,
+        abs=1e-9
+    )
+
+
+def test_rayleigh_number_basic_case():
+    """
+    Test Rayleigh number calculation.
+
+    Conditions:
+        Gr = 1e6
+        Pr = 0.7
+
+    Expected:
+        Ra = Gr * Pr = 7e5
+    """
+
+    Gr = 1.0e6
+    Pr = 0.7
+
+    Ra = rayleigh_number(Gr, Pr)
+
+    expected_Ra = 7.0e5
+
+    assert Ra == pytest.approx(
+        expected_Ra,
+        rel=1e-9,
+        abs=1e-9
+    )
+
+
+def test_rayleigh_number_realistic_air_case():
+    """
+    Test Rayleigh number for a realistic air natural convection case.
+
+    Conditions:
+        Gr = 3.07e9
+        Pr = 0.70
+
+    Expected:
+        Ra = Gr * Pr
+    """
+
+    Gr = 3.07e9
+    Pr = 0.70
+
+    Ra = rayleigh_number(Gr, Pr)
+
+    expected_Ra = Gr * Pr
+
+    assert Ra == pytest.approx(
+        expected_Ra,
         rel=1e-9,
         abs=1e-9
     )

@@ -138,3 +138,30 @@ def grashof_number_ideal_gas(T_s, T_o, L, nu_s):
     """
 
     return (T_s - T_o) * G_STANDARD * L**3 / (T_o * nu_s**2)
+
+
+def rayleigh_number(Gr, Pr):
+    """
+    Calculate Rayleigh number.
+
+    Parameters
+    ----------
+    Gr : float
+        Grashof number [-]
+
+    Pr : float
+        Prandtl number [-]
+
+    Returns
+    -------
+    Ra : float
+        Rayleigh number [-]
+
+    Notes
+    -----
+    Rayleigh number is calculated as:
+
+        Ra = Gr * Pr
+    """
+
+    return Gr * Pr
