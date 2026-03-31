@@ -41,10 +41,32 @@ def enthalpy_water_pT(p, T):
     """
 
     return PropsSI("H", "P", p, "T", T, "Water")
-    
+
+
+def density_water_pT(p, T):
+    """
+    Calculate density of water from pressure and temperature.
+
+    Parameters
+    ----------
+    p : float
+        Pressure [Pa]
+    T : float
+        Temperature [K]
+
+    Returns
+    -------
+    rho : float
+        Density of water [kg/m³]
+
+    Notes
+    -----
+    Internally uses CoolProp property database.
+    """
+
+    return PropsSI("Dmass", "P", p, "T", T, "Water")
 
 # TODO:
-# - density_water_pT
 # - viscosity_water_pT
 # - cp_water_pT
 # - density_air_pT
